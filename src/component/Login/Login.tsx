@@ -6,10 +6,22 @@ import * as Yup from 'yup'
 import { UserContext } from '../../context/Usercontext';
 import { CartContext } from '../../context/CartContext';
 import { Helmet } from 'react-helmet';
+import { WishListContext } from '../../context/WishListContext';
+import { jwtDecode } from 'jwt-decode';
+
+export interface UserData {
+    id: string;
+    name: string;
+    role: string;
+    iat: number;
+    exp: number;
+}
 
 export default function Register() {
-    let { getUserCart, setnumItem } = useContext(CartContext)
-    let { setuserToken, userToken } = useContext(UserContext)
+    let { getUserCart, setnumItem,getAllUserOrder } = useContext(CartContext)
+    let { setuserToken, userToken ,data} = useContext(UserContext)
+    let {getALLWishList}=useContext(WishListContext)
+    let [userData,setUserdata]=useState<string|null>(null)
     let navg = useNavigate()
     let [errmessage, setErr] = useState("")
     let [loading, setLoading] = useState(true)
@@ -18,8 +30,8 @@ export default function Register() {
         password: string;
     }
     let validationSchema = Yup.object({
-        email: Yup.string().required('Email is required').matches(/\w+@\w+\.\w+/, "Enter valid email"),
-        password: Yup.string().required('Password is required').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, "Enter valid password")
+        email: Yup.string().required('Email is required').matches(/\w+@\w+\.\w+/, "Email not valid *exemple@yyy.zzz"),
+        password: Yup.string().required('Password is required').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, "Enter valid password *Minimum eight characters, at least one letter and one number:*")
     })
     let formik = useFormik<Values>({
         initialValues: {
@@ -39,21 +51,37 @@ export default function Register() {
         })
         if (req?.data?.message === "success") {
             console.log(req.data)
-            localStorage.setItem("userToken", req.data.token)
-            setuserToken(req.data.token)
+            localStorage.setItem("userToken", req?.data?.token)
+            setuserToken(req?.data?.token)
+            let decodedToken:UserData = jwtDecode(req?.data?.token);
+            getUserOrder(decodedToken.id)
             getUserData()
-            console.log(userToken)
+            getUserWishList()
             navg("/home")
         }
         setLoading(true)
     }
+    async function getUserOrder(decodedToken:any){
+        let req=await getAllUserOrder(decodedToken).catch((err:any)=>{
+        console.log(err)
+        })
+        console.log(req.data)
+    }
     async function getUserData() {
-        let req = await getUserCart()
-        console.log(req)
-        if (req.data.status === 'success') {
-            setnumItem(req.data.numOfCartItems)
+        let req = await getUserCart().catch((err: any) => {
+            console.log(err)
+        })
+        if (req?.data?.status === 'success') {
+            setnumItem(req?.data.numOfCartItems)
         }
     }
+    
+      async function getUserWishList() {
+        let req = await getALLWishList().catch((err: any) => {
+          console.log(err)
+        })
+        console.log(req)
+      }
 
     return (
         <>

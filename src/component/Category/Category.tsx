@@ -20,7 +20,7 @@ export default function Category() {
           <title>Category</title>
         </Helmet>
       </div>
-      <div className=' container '>
+      <div className=' container 'key={"676"} >
         <div className='row g-4 mt-4'>
           {categoryList?.map((el) => {
             return <>

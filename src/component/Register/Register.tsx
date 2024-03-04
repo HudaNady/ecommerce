@@ -17,11 +17,11 @@ export default function Register() {
         phone: string
     }
     let validationSchema = Yup.object({
-        name: Yup.string().required('Name is required').min(3, 'Min char is 3').max(12, 'Max char is 12'),
-        email: Yup.string().required('Email is required').matches(/\w+@\w+\.\w+/, "Enter valid email"),
-        password: Yup.string().required('Password is required').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, "Enter valid password"),
+        name: Yup.string().required('Name is required').matches(/^[A-Z][a-z]{2,20}$/,"Special characters and numbers not allowed"),
+        email: Yup.string().required('Email is required').matches(/\w+@\w+\.\w+/, "Email not valid *exemple@yyy.zzz"),
+        password: Yup.string().required('Password is required').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, "Enter valid password *Minimum eight characters, at least one letter and one number:*"),
         rePassword: Yup.string().required('Repassword is required').oneOf([Yup.ref("password")], "Repassword not match"),
-        phone: Yup.string().required('Phone is required').matches(/^01[1250][0-9]{8}$/, "Enter valid phone")
+        phone: Yup.string().required('Phone is required').matches(/^01[1250][0-9]{8}$/, "Enter valid phone ")
     })
     let formik = useFormik<Values>({
         initialValues: {

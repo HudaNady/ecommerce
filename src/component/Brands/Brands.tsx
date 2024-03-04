@@ -30,11 +30,11 @@ export default function Brands() {
           <title>Brands</title>
         </Helmet>
       </div>
-      <div className=' container '>
+      <div className=' container ' key={"567"}>
         <div className='row g-4 mt-4'>
           {brandsList?.map((el, index) => {
             return <>
-              <div className="col-md-3 " key={el._id} >
+              <div className="col-md-3 " key={el._id}>
                 <div className='category border border-2 rounded-2 overflow-hidden text-center' onClick={() => getSupDetails(index)}  >
                   <img src={el.image} className='w-100' height={200} alt="" />
                   <h6 className='fw-bold py-3'>{el.name}</h6>

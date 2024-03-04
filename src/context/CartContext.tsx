@@ -1,9 +1,12 @@
 import axios from "axios";
-import { createContext, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { createContext, useContext, useState } from "react";
+import { UserContext } from "./Usercontext";
 export let CartContext= createContext<any>({})
 export function CartContextProvider({ children }: { children: React.ReactNode }){
     let [numItem,setnumItem]=useState(0)
+    
+    
+
     async function addCart(productId:string){
         let body={
             productId:productId
@@ -49,14 +52,14 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
         let body={
             shippingAddress:data
         }
-        return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=http://localhost:3000`,body,{
+        return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=https://HudaNady.github.io/ecommerce/`,body,{
             headers:{
                 token:localStorage.getItem("userToken")
             }
         })
     }
-    async function getAllUserOrder(){
-        return await axios.get("https://ecommerce.routemisr.com/api/v1/orders/user/65df430cbe8b52323563877e",{
+    async function getAllUserOrder(userData:any){
+        return await axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userData}`,{
             headers:{
                 token:localStorage.getItem("userToken")
             }

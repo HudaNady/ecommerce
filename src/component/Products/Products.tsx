@@ -134,7 +134,7 @@ export default function Home() {
                       <h6 className='text-main p-2'>{el.category.name}</h6>
                       <h3 className='h6 fw-bold p-2'>{el.title.split(' ').slice(0, 2).join(' ')}</h3>
                       <div className='d-flex justify-content-between p-2'>
-                        <span>{el.price}</span>
+                        <span>{el.price} EGP</span>
                         <span>
                           <i className='fa-solid fa-star rating-color'></i>
                           {el.ratingsAverage}

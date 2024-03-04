@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Footer from '../Footer/Footer'
@@ -10,33 +10,36 @@ import { WishListContext } from '../../context/WishListContext'
 export default function Layout() {
   let {getUserCart,getAllUserOrder,setnumItem}=useContext(CartContext)
   let {getALLWishList}=useContext(WishListContext)
-
-
-  let {setuserToken}=useContext(UserContext)
-
+  let {setuserToken,data,userToken}=useContext(UserContext)
+  let [userData,setUserdata]=useState<string>('')
+  
   let navg=useNavigate()
   useEffect(() => {
-    if(localStorage.getItem("userToken")!=null){
-      setuserToken(localStorage.getItem("userToken"))
+    if(localStorage?.getItem("userToken")!=null){
+      setuserToken(localStorage?.getItem("userToken"))
       getUserData()
       getUserWishList()
-      getUserOrder()
+      if(data!=null){
+        getUserOrder(data?.id)
+      }
+      
+      navg("/home")
     };
   },[]);
   async function getUserData(){
     let req=await getUserCart().catch((err:any)=>{
       console.log(err)
     })
-    console.log(req)
     if(req?.data?.status==='success'){
       setnumItem(req?.data?.numOfCartItems)
+      console.log(req?.data)
     }
   }
-  async function getUserOrder(){
-    let req=await getAllUserOrder().catch((err:any)=>{
+  async function getUserOrder(userData:string){
+    let req=await getAllUserOrder(userData).catch((err:any)=>{
       console.log(err)
     })
-    console.log(req)
+    console.log(req.data)
   }
   async function getUserWishList() {
     let req = await getALLWishList().catch((err: any) => {

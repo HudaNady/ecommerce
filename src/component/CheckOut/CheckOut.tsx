@@ -41,7 +41,7 @@ export default function CheckOut() {
         })
         console.log(req)
         if (req?.data.status === "success") {
-            window.open(req?.data?.session.url, "_selfl")
+            window.open(req?.data?.session.url, "_self")
         }
         setLoading(true)
     }

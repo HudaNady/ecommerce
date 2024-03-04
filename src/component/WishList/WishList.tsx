@@ -78,7 +78,7 @@ export default function WishList() {
                   <div className="col-md-1">
                     <img src={el.imageCover} className='w-100' alt="" />
                   </div>
-                  <div className="col-md-10">
+                  <div className="col-md-10 text-sm-center text-md-start">
                     <h6 className='text-main'>{el.title}</h6>
                     <h5 className=' text-muted'>Price:{el.price}</h5>
                     <div className='text-danger cursor-pointer' onClick={() => removeItem(el.id)}>

@@ -70,7 +70,7 @@ export default function ProductDetails() {
                         <p>{details?.description}</p>
                         <h6 className='text-main'>{details?.category?.name}</h6>
                         <div className='d-flex justify-content-between p-2'>
-                            <span>{details?.price}</span>
+                            <span>{details?.price} EGP</span>
                             <span>
                                 <i className='fa-solid fa-star rating-color'></i>
                                 {details?.ratingsAverage}

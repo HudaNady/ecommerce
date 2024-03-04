@@ -26,7 +26,7 @@ import AllOrder from './component/AllOrder/AllOrder'
 
 export default function App() {
   let QueryClients=new QueryClient()
-  const routers=createHashRouter([
+  const routers=createBrowserRouter([
     {path:"",element:<Layout/> , children:[
       {path:"home",element:<ProtectedRouting><Home /></ProtectedRouting>},
       {path:"brands",element:<ProtectedRouting><Brands /></ProtectedRouting>},
@@ -46,13 +46,17 @@ export default function App() {
     ])
   return <>
   <QueryClientProvider client={QueryClients}>
+  <UserContextProvider>
     <WishListContextProvider>
+    
     <CartContextProvider>
-    <UserContextProvider>
+    
     <RouterProvider router={routers}/>
-  </UserContextProvider>
+  
     </CartContextProvider>
+
     </WishListContextProvider>
+    </UserContextProvider>
   </QueryClientProvider>
   
   

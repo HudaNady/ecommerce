@@ -4,30 +4,28 @@ import Spinner from '../Spinner/Spinner'
 import { CartItem, UserAllOrder } from '../../interfaces/allUserOrder'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { UserContext } from '../../context/Usercontext'
 
 export default function AllOrder() {
     let { getAllUserOrder } = useContext(CartContext)
-    let [allorderdata, setallorderdata] = useState<UserAllOrder>()
+    let [allorderdata, setallorderdata] = useState<UserAllOrder[]>([])
     let [cartItem, setcartItem] = useState<CartItem>()
-
+    let {data,userToken}=useContext(UserContext)
+    let [userData,setUserdata]=useState<string>('')
     let [loading, setLoading] = useState(false)
     useEffect(() => {
-        getUserOrder();
+            getUserOrder(data?.id);
     }, [])
-    async function getUserOrder() {
+    async function getUserOrder(userdata:any) {
         setLoading(true)
-        let req = await getAllUserOrder().catch((err: any) => {
+        let req = await getAllUserOrder(userdata).catch((err: any) => {
             console.log(err)
         })
-
-
-        if (req.data != null) {
+        if (req?.data != null) {
             setallorderdata(req?.data)
             setcartItem(req?.data.data)
             setLoading(false)
-            console.log(req.data)
-            console.log("helooo")
-        }
+            console.log(req.data)        }
     }
 
 
@@ -41,17 +39,16 @@ export default function AllOrder() {
                 </Helmet>
             </div>
             <div className="container bg-light p-5 mt-5 ">
-                {allorderdata != null ? <>
-                    {Array.isArray(allorderdata) && allorderdata.map((el, index) => {
+                {allorderdata.length!==0?(<>{Array.isArray(allorderdata) && allorderdata.map((el, index) => {
                         return <>
-                            <div className="row p-4 g-3 flex-wrap align-items-center shadow border-bottom border-3 bg-light ">
+                            <div className="row p-4 g-3 flex-wrap align-items-center shadow border-bottom border-3 bg-light " key={el._id}>
                                 <h4 className='fw-bold text-muted my-2 '>Order {index + 1}</h4>
-                                <div className="col-md-6 ">
-                                    <h5 className='text-main'>Order items</h5>
-                                    <div className="d-flex gap-3   ">
+                                <div className="col-md-6  ">
+                                    <h5 className='text-main' key={el.id}>Order items</h5>
+                                    <div className="d-flex gap-3 flex-wrap  ">
                                         {el.cartItems.map((ele: any) => {
                                             return <>
-                                                <div className="col-md-4 flex-wrap shadow d-flex flex-column justify-content-center align-items-center p-2 border-2 border ">
+                                                <div className="col-md-4  shadow d-flex flex-column justify-content-center align-items-center p-2 border-2 border ">
                                                     <img src={ele.product.imageCover} className='w-50 mx-auto' alt="" />
                                                     <h6 className='text-muted mb-0'>{ele.product.category.name}</h6>
                                                     <p className='mb-0 text-main  '>{ele.product.title.split(' ').slice(0, 2).join(' ')}</p>
@@ -75,10 +72,9 @@ export default function AllOrder() {
                                 </div>
                             </div>
                         </>
-                    })}
-                </> : <><h4>You haven't any order</h4>
-                    <Link className='btn bg-main text-white  ' to='/products'>Order now</Link></>
-
+                    })}</> ): (<><h4>You haven't any order</h4>
+                    <Link className='btn bg-main text-white  ' to='/products'>Order now</Link>
+                    </>)
                 }
             </div>
         </>}

@@ -79,24 +79,24 @@ export default function Cart() {
           <title>Cart</title>
         </Helmet>
       </div>
-      <div className="container bg-light p-5 mt-5 ">
-        {cartdata != null ? <>  <button className='btn bg-danger text-white mt3 ' onClick={() => clearCart(cartlist?._id)} >Clear cart</button>
+      <div className="container bg-light p-5 mt-5 " key={"3475"}>
+        {cartdata != null ? <>  <button className='btn bg-danger text-white mt3  text-sm-center text-md-start' onClick={() => clearCart(cartlist?._id)} >Clear cart</button>
           {cartdata?.data?.products.map((el) => {
             return <>
               <div className="row p-4 border-bottom border-3 align-items-center">
-                <div className="col-md-10">
-                  <div className="row align-items-center">
-                    <div className="col-md-1">
+                <div className="col-md-10 text-md-start  text-sm-center">
+                  <div className="row align-items-center ">
+                    <div className="col-md-1 mb-2">
                       <img src={el.product.imageCover} className='w-100' alt="" />
                     </div>
                     <div className="col-md-10">
                       <h6 className='text-main'>{el.product.title}</h6>
                       <h5 className=' text-muted'>Price:{el.price}</h5>
-                      <button className='btn btn-danger' onClick={() => removeItem(el.product._id)}>Remove <i className='fa-solid fa-trash'></i></button>
+                      <button className='btn btn-danger mb-3' onClick={() => removeItem(el.product._id)}>Remove <i className='fa-solid fa-trash'></i></button>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-2 ">
+                <div className="col-md-2 text-center ">
                   <span className='btn btn-sm bg-main' onClick={() => updataCart(el.product._id, el.count + 1)}>
                     <i className='fa-solid  fa-plus text-white'></i>
                   </span>
@@ -111,9 +111,11 @@ export default function Cart() {
               </div>
             </>
           })}
+          <div className=' text-sm-center text-md-start'>
           <h5 className='text-main mt-3'>Total price:{cartdata?.data?.totalCartPrice}</h5>
-          <Link className='btn bg-main text-white  ' to={`/checkout/${cartdata.data._id}`}>Check out your order</Link></> : <><h4>Cart is impty</h4>
-          <Link className='btn bg-main text-white  ' to='/products'>Order now</Link></>}
+          <Link className='btn bg-main text-white  ' to={`/checkout/${cartdata.data._id}`}>Check out your order</Link></div></> : <><div className='text-sm-center text-md-start'>
+          <h4>Cart is impty</h4>
+          <Link className='btn bg-main text-white  ' to='/products'>Order now</Link></div></>}
       </div>
     </>}
     </>

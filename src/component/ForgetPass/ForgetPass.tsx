@@ -18,7 +18,7 @@ export default function ForgetPass() {
         resetCode: string;
     }
     let validationSchema1 = Yup.object({
-        email: Yup.string().required("Email is required").matches(/\w+@\w+\.\w+/, 'Enter valid email')
+        email: Yup.string().required("Email is required").matches(/\w+@\w+\.\w+/, 'Email not valid *exemple@yyy.zzz')
     })
     let validationSchema2 = Yup.object({
         resetCode: Yup.string().required("Code is required").matches(/^[0-9]{5,6}$/, 'Enter valid code')

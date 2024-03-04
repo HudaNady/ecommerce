@@ -13,8 +13,8 @@ export default function Register() {
         newPassword: string;
     }
     let validationSchema=Yup.object({
-        email:Yup.string().required('Email is required').matches(/\w+@\w+\.\w+/,"Enter valid email"),
-        newPassword:Yup.string().required('Password is required').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,"Enter valid password")
+        email:Yup.string().required('Email is required').matches(/\w+@\w+\.\w+/,"Email not valid *exemple@yyy.zzz"),
+        newPassword:Yup.string().required('Password is required').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,"Enter valid password *Minimum eight characters, at least one letter and one number:*")
     })
     let formik=useFormik<Values>({
         initialValues:{
