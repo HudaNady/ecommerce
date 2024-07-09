@@ -26,7 +26,7 @@ import AllOrder from './component/AllOrder/AllOrder'
 
 export default function App() {
   let QueryClients=new QueryClient()
-  const routers=createBrowserRouter([
+  const routers=createHashRouter([
     {path:"",element:<Layout/> , children:[
       {path:"home",element:<ProtectedRouting><Home /></ProtectedRouting>},
       {path:"brands",element:<ProtectedRouting><Brands /></ProtectedRouting>},
