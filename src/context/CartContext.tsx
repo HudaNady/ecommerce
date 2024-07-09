@@ -52,7 +52,7 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
         let body={
             shippingAddress:data
         }
-        return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=https://HudaNady.github.io/ecommerce/`,body,{
+        return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=https://HudaNady.github.io/ecommerce/#`,body,{
             headers:{
                 token:localStorage.getItem("userToken")
             }
